@@ -87,7 +87,15 @@
   color: white;
   margin: 1.5rem 0 1rem;
   font-size: 1.25rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title-icon {
+  display: inline-block;
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
 /* Games list (vertical) */
@@ -106,50 +114,78 @@
 /* Cards grid used by Recommended and GOAT */
 .cards-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-bottom: 1.5rem;
+  animation: slideIn 0.6s ease-out;
 }
 
-/* on wider screens show two columns */
-@media (min-width: 720px) {
-  .cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.cards-grid.goat-grid {
+  animation: slideIn 0.6s ease-out 0.1s both;
 }
-@media (min-width: 1100px) {
-  .cards-grid {
-    grid-template-columns: repeat(3, 1fr);
+
+/* Slide animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* spacing for card links to make whole card clickable */
-.card-link {
-  display: block;
+/* Auto slider wrapper */
+.auto-slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 8px 0;
+}
+
+/* track: duplicated items scroll left continuously */
+.slider-track {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+  will-change: transform;
+  transition: transform 0.8s cubic-bezier(.22,.9,.3,1); /* default easing */
+}
+
+/* each visible item */
+.slider-item {
+  flex: 0 0 320px; /* card width; adjust as needed */
+  max-width: 320px;
+  box-sizing: border-box;
   text-decoration: none;
   color: inherit;
-  position: relative;
 }
 
-/* GOAT specific styling */
+/* speed: change duration to control scroll speed */
+/* keyframes move track left by 50% (one loop of duplicated content) */
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* responsive: smaller card width on narrow screens */
+@media (max-width: 1100px) {
+  .slider-item { flex: 0 0 280px; max-width: 280px; }
+  .slider-track { animation-duration: 16s; }
+}
+
+@media (max-width: 720px) {
+  .slider-item { flex: 0 0 90%; max-width: 90%; }
+  .slider-track { animation-duration: 12s; }
+}
+
+/* ensure goat badge sits above card */
 .goat-badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: linear-gradient(90deg, var(--primary), var(--primary-700));
-  color: white;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 0.75rem;
-  z-index: 5;
-  box-shadow: 0 8px 18px rgba(37,99,235,0.16);
-}
-
-/* tweak GamePrev inside grid: slightly larger spacing */
-.cards-grid .game-prev-container {
-  padding: 16px;
-  border-radius: 14px;
+  top: 8px;
+  right: 12px;
+  z-index: 6;
 }
 
 /* small screens tweaks */
@@ -157,4 +193,11 @@
   .hero-inner { padding: 1.4rem; }
   .hero-title { font-size: 1.6rem; }
   .cta-button { padding: 0.6rem 1rem; }
+}
+
+/* Carousel/Slide for We Recommended & GOAT */
+.we-recommended,
+.goat-section {
+  position: relative;
+  overflow: hidden;
 }

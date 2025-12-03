@@ -1,0 +1,12 @@
+.intro-video-section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 40px;
+}
+
+.intro-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  background: black;
+}

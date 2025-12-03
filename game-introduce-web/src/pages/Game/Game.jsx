@@ -7,6 +7,7 @@ import './Game.css';
 import img1 from '../../assets/game-wwm.jpg';
 import img2 from '../../assets/game-wuwa.jpg';
 import img3 from '../../assets/game-genshin.jpg';
+import img4 from '../../assets/game-minecraft.jpg';
 
 const gamesData = [
   {
@@ -43,16 +44,27 @@ Khám phá các vùng đất khác nhau, thu thập nguyên liệu và chiến �
 Hệ thống nhân vật đa dạng với kỹ năng đặc biệt. 
 Game nổi bật với đồ họa 3D tuyệt đẹp và cốt truyện lôi cuốn.`
   },
+  {
+    id: '4',
+    image: img4,
+    name: 'Minecraft',
+    rating: 4.0,
+    introduction: `Khám phá thế giới mở trong Minecraft. 
+Tự do xây dựng, khai thác tài nguyên và phiêu lưu cùng bạn bè. 
+Game nổi bật với gameplay sáng tạo không giới hạn và cộng đồng đông đảo. 
+Tham gia các server, thử thách PvP hoặc cùng nhau khám phá vùng đất mới. 
+Minecraft là lựa chọn tuyệt vời cho mọi lứa tuổi và mọi sở thích.`
+  }
 ];
 
 const Game = () => {
   const { id } = useParams();
   const [comments, setComments] = useState([
-  { id: 1, name: 'Minh Hoàng', avatar: 'https://i.pravatar.cc/40?u=1', text: 'Trò chơi này thật tuyệt vời!' },
-  { id: 2, name: 'Lan Anh', avatar: 'https://i.pravatar.cc/40?u=2', text: 'Mình rất thích đồ họa và lối chơi của game.' },
-  { id: 3, name: 'Hải Đăng', avatar: 'https://i.pravatar.cc/40?u=3', text: 'Các nhiệm vụ trong game đa dạng và thú vị.' },
-  { id: 4, name: 'Nhật Linh', avatar: 'https://i.pravatar.cc/40?u=4', text: 'Rất đáng để thử cho mọi lứa tuổi!' },
-]);
+    { id: 1, name: 'Minh Hoàng', avatar: 'https://i.pravatar.cc/40?u=1', text: 'Trò chơi này thật tuyệt vời!' },
+    { id: 2, name: 'Lan Anh', avatar: 'https://i.pravatar.cc/40?u=2', text: 'Mình rất thích đồ họa và lối chơi của game.' },
+    { id: 3, name: 'Hải Đăng', avatar: 'https://i.pravatar.cc/40?u=3', text: 'Các nhiệm vụ trong game đa dạng và thú vị.' },
+    { id: 4, name: 'Nhật Linh', avatar: 'https://i.pravatar.cc/40?u=4', text: 'Rất đáng để thử cho mọi lứa tuổi!' },
+  ]);
 
   const [newComment, setNewComment] = useState('');
   const [currentRating, setCurrentRating] = useState(0);
@@ -60,7 +72,6 @@ const Game = () => {
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
   const [showFullIntro, setShowFullIntro] = useState(false);
 
-  // All Games page
   if (!id) {
     return (
       <div className="game-root">
@@ -87,7 +98,6 @@ const Game = () => {
     );
   }
 
-  // Individual Game page
   const game = gamesData.find(g => g.id === id);
   if (!game) return (
     <div className="game-root">
@@ -118,7 +128,6 @@ const Game = () => {
             <h1>{game.name}</h1>
             <p className="game-rating">Đánh giá: {game.rating} ⭐</p>
 
-            {/* Introduction */}
             <div className={`game-description ${showFullIntro ? 'expanded' : ''}`}>
               {game.introduction}
             </div>
@@ -130,7 +139,6 @@ const Game = () => {
           </div>
         </div>
 
-        {/* Star Rating */}
         <div className="rating-slider">
           <h3>Đánh giá:</h3>
           <div className="star-rating">{[1,2,3,4,5].map(i => (
@@ -141,7 +149,6 @@ const Game = () => {
           {ratingSubmitted && <p className="rating-thanks-msg">Gửi đánh giá thành công!</p>}
         </div>
 
-        {/* Comments */}
         <section className="game-comments">
           <h2>Comments</h2>
           <form onSubmit={handleCommentSubmit} className="comment-form">
