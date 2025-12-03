@@ -20,19 +20,19 @@ const Home = () => {
   ];
 
   const recommended = [
-    { id: 'r2', image: img1, name: 'Where Wind Meet' },
-    { id: 'r1', image: img4, name: 'Minecraft' },
-    { id: 'r3', image: img2, name: 'Wuthering Waves' },
-    { id: 'r4', image: img3, name: 'Genshin Impact' },
-    { id: 'r5', image: img1, name: 'Where Wind Meet 2' }
+    { id: 1, image: img1, name: 'Where Wind Meet' },
+    { id: 4, image: img4, name: 'Minecraft' },
+    { id: 2, image: img2, name: 'Wuthering Waves' },
+    { id: 3, image: img3, name: 'Genshin Impact' },
+    { id: 1, image: img1, name: 'Where Wind Meet 2' }
   ];
 
   const goatList = [
-    { id: 'g1', image: img4, name: 'Minecraft' },
-    { id: 'g2', image: img3, name: 'Genshin Impact' },
-    { id: 'g3', image: img1, name: 'Wuthering Waves' },
-    { id: 'g4', image: img2, name: 'Wuthering Waves 2' },
-    { id: 'g5', image: img4, name: 'Minecraft 2' }
+    { id: 4, image: img4, name: 'Minecraft' },
+    { id: 3, image: img3, name: 'Genshin Impact' },
+    { id: 1, image: img1, name: 'Wuthering Waves' },
+    { id: 2, image: img2, name: 'Wuthering Waves 2' },
+    { id: 4, image: img4, name: 'Minecraft 2' }
   ];
 
   // duplicated arrays for seamless loop
@@ -67,23 +67,18 @@ const Home = () => {
       let idx = 0;
       const advance = () => {
         idx += 1;
-        // apply transition for smooth ease
         track.style.transition = 'transform 0.8s cubic-bezier(.22,.9,.3,1)';
         track.style.transform = `translateX(-${idx * step}px)`;
-        // if we've reached original length (end of first loop), after transition jump to start
         if (idx === loopLength) {
           const handler = () => {
-            // remove transition, snap back to start
             track.style.transition = 'none';
             idx = 0;
             track.style.transform = `translateX(0px)`;
             track.removeEventListener('transitionend', handler);
-            // update external state without transition
             setIndex(0);
           };
           track.addEventListener('transitionend', handler);
         } else {
-          // update external index normally
           setIndex(idx);
         }
       };
@@ -128,7 +123,7 @@ const Home = () => {
 
         <div className="games-list">
           {games.map((game) => (
-            <Link key={game.id} to="/game" className="game-link">
+            <Link key={game.id} to={`/game/${game.id}`} className="game-link">
               <GamePrev
                 image={game.image}
                 name={game.name}
@@ -148,7 +143,7 @@ const Home = () => {
           <div className="auto-slider">
             <div className="slider-track" ref={recTrackRef}>
               {recommendedLoop.map((g, idx) => (
-                <Link key={g.id + '-' + idx} to="/game" className="game-link card-link slider-item">
+                <Link key={g.id + '-' + idx} to={`/game/${g.id}`} className="game-link card-link slider-item">
                   <GamePrev image={g.image} name={g.name} showDescription={false} />
                 </Link>
               ))}
@@ -161,12 +156,12 @@ const Home = () => {
           <h2 className="section-title">
             <span className="title-icon">🏆</span>
             Tốt nhất mọi thời đại
-          </h2>
+        </h2>
 
           <div className="auto-slider">
             <div className="slider-track" ref={goatTrackRef}>
               {goatLoop.map((g, idx) => (
-                <Link key={g.id + '-' + idx} to="/game" className="game-link card-link slider-item">
+                <Link key={g.id + '-' + idx} to={`/game/${g.id}`} className="game-link card-link slider-item">
                   <div className="goat-badge">GOAT</div>
                   <GamePrev image={g.image} name={g.name} showDescription={false} />
                 </Link>
